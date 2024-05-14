@@ -11,29 +11,31 @@ function getData() {
   } else {
     let userInput = inputField.value;
     error.style.display = "none";
-    outputEl.innerHTML = ""; // Clear existing tasks
+    outputEl.innerHTML = "";
 
-    data.push(userInput);
+    let id = Math.random();
+    data.push({ id: id, value: userInput });
 
     // Looping data from array(data)
     data.map((item, key) => {
       let li = document.createElement("li");
-      li.innerText = item;
-      
+      li.innerText = item.value;
+
       let btn = document.createElement("span");
       btn.innerText = "X";
       btn.classList.add("cross");
-      
+
       let div = document.createElement("div");
+      div.setAttribute("id", item.id);
+
       div.classList.add("item_container");
       div.append(li, btn);
       outputEl.append(div);
 
       // Event listener for delete button
       btn.addEventListener("click", (e) => {
-        e.target.parentNode.remove();
-        // Remove item from data array
-        data.splice(key, -1);
+        // e.target.parentNode.remove();
+        deleteHandler(div);
       });
     });
 
@@ -41,9 +43,32 @@ function getData() {
   }
 }
 
-function deleteHandler(){
-  
-}
+function deleteHandler(item) {
+  const filter = data.filter((val) => val.id != item.id);
+  data = filter;
+  outputEl.innerHTML = "";
 
+  data.map((item) => {
+    let li = document.createElement("li");
+    li.innerText = item.value;
+
+    let btn = document.createElement("span");
+    btn.innerText = "X";
+    btn.classList.add("cross");
+
+    let div = document.createElement("div");
+    div.setAttribute("id", item.id);
+
+    div.classList.add("item_container");
+    div.append(li, btn);
+    outputEl.append(div);
+
+    // Event listener for delete button
+    btn.addEventListener("click", (e) => {
+      // e.target.parentNode.remove();
+      deleteHandler(div);
+    });
+  });
+}
 
 submitEl.addEventListener("click", getData);
