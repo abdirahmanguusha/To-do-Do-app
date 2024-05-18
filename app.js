@@ -4,71 +4,75 @@ let outputEl = document.getElementById("output");
 let error = document.querySelector(".error");
 
 let data = [];
+console.log(data);
 
-function getData() {
+if (localStorage.getItem("data")) {
+  let result = JSON.parse(localStorage.getItem("data"));
+
+  data = result;
+  renderItems();
+}
+
+function addElement() {
   if (inputField.value.trim() === "") {
     error.style.display = "block";
   } else {
     let userInput = inputField.value;
     error.style.display = "none";
-    outputEl.innerHTML = "";
 
     let id = Math.random();
     data.push({ id: id, value: userInput });
-
-    // Looping data from array(data)
-    data.map((item, key) => {
-      let li = document.createElement("li");
-      li.innerText = item.value;
-
-      let btn = document.createElement("span");
-      btn.innerText = "X";
-      btn.classList.add("cross");
-
-      let div = document.createElement("div");
-      div.setAttribute("id", item.id);
-
-      div.classList.add("item_container");
-      div.append(li, btn);
-      outputEl.append(div);
-
-      // Event listener for delete button
-      btn.addEventListener("click", (e) => {
-        // e.target.parentNode.remove();
-        deleteHandler(div);
-      });
-    });
+    renderItems();
 
     inputField.value = "";
   }
 }
 
-function deleteHandler(item) {
-  const filter = data.filter((val) => val.id != item.id);
-  data = filter;
+function renderItems() {
   outputEl.innerHTML = "";
-
-  data.map((item) => {
+  data.forEach((item) => {
     let li = document.createElement("li");
     li.innerText = item.value;
-
-    let btn = document.createElement("span");
-    btn.innerText = "X";
-    btn.classList.add("cross");
+    let deleteBtn = document.createElement("span");
+    deleteBtn.innerText = "X";
+    deleteBtn.classList.add("cross");
 
     let div = document.createElement("div");
     div.setAttribute("id", item.id);
 
     div.classList.add("item_container");
-    div.append(li, btn);
+    div.append(li, deleteBtn);
     outputEl.append(div);
 
-    // Event listener for delete button
-    btn.addEventListener("click", (e) => {
-      // e.target.parentNode.remove();
+    deleteBtn.addEventListener("click", () => {
       deleteHandler(div);
     });
   });
+
+  // Store in localStorage after rendering
+  localStorage.setItem("data", JSON.stringify(data));
 }
 
-submitEl.addEventListener("click", getData);
+function deleteHandler(div) {
+  // Delete from DOM
+  const itemToDelete = document.getElementById(div.id);
+  if (itemToDelete) {
+    itemToDelete.remove();
+  }
+
+  // Delete from Array
+  data = data.filter((item) => item.id != div.id);
+
+  // Update back to localStorage
+  localStorage.setItem("data", JSON.stringify(data));
+}
+
+function onKeyEnter(e) {
+  if (e.key === "Enter") {
+    addElement();
+  }
+}
+
+// Events
+submitEl.addEventListener("click", addElement);
+inputField.addEventListener("keydown", onKeyEnter);

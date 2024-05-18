@@ -6,13 +6,12 @@
 
 body {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  background-color: blueviolet;
+  background-color: rgba(180, 145, 214, 0.498);
 }
 
 .parent-container {
-  background-color: rgb(144, 165, 229);
   height: 100vh;
-  width: 40%;
+  width: 50%;
   margin: auto;
   padding: 10px;
   align-items: center;
@@ -32,10 +31,15 @@ body {
   margin-top: 1rem;
 }
 
-.container button {
-  background-color: black;
-  color: white;
-  position: relative;
+.item_container {
+  border-radius: 2px;
+  padding: 0px;
+  width: 390px;
+  align-items: center;
+  padding-bottom: 0px;
+  height: 60px;
+  background-color: rgba(32, 11, 171, 0.189);
+  box-shadow: 0 9px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
 }
 
 button:hover,
@@ -49,22 +53,27 @@ button:hover,
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin-top: 6px;
 }
 
 .output li {
   list-style-type: none;
-  margin-top: 9px;
-  background-color: lightblue;
-  padding: 10px;
+  padding: 15px;
   font-family: sans-serif;
   width: 13rem;
+  width: 100%;
+  font-size: 20px;
+  font-weight: 500;
+  text-align: left;
+  margin-top: 0px;
+  color: rgb(253, 253, 253);
 }
 
 .error {
   background-color: whitesmoke;
   color: red;
   text-align: center;
-  font-size: 17px;
+  font-size: 25px;
   display: none;
   margin: auto;
   margin-top: 0.5rem;
@@ -78,10 +87,15 @@ button:hover,
 
 .cross {
   position: relative;
-  top: -36px;
-  left: 91px;
+  top: -38px;
+  left: 160px;
   color: red;
   font-weight: 700;
+  font-size: 25px;
+  border-radius: 65px;
+  border: solid 3px rgb(156, 142, 140);
+  background-color: rgb(255, 254, 253);
+  padding: 5px;
 }
 
 .task-input {
@@ -100,7 +114,7 @@ button:hover,
 
 .add-button {
   padding: 10px 15px;
-  background-color: #4caf50;
+  background-color: #524cee;
   border: none;
   border-radius: 0 5px 5px 0;
   color: white;
@@ -110,4 +124,14 @@ button:hover,
 
 .add-button:hover {
   background-color: #45a049;
+}
+.cross:hover {
+  background-color: #9101bd3b;
+}
+
+@media only screen and (max-width: 1000px) {
+  .parent-container {
+    width: 100%;
+    margin: auto;
+  }
 }
